@@ -60,3 +60,7 @@ export async function chatApi(options: ChatRequest): Promise<Response> {
 export function getCitationFilePath(citation: string): string {
     return `/content/${citation}`;
 }
+
+// export async function getHistroy (){
+//     return await fetch("/history")
+// }

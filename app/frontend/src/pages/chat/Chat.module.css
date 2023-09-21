@@ -104,6 +104,15 @@
     font-size: 28px;
 }
 
+.historyContainer{
+    width:20%;
+    display: flex;
+    align-self: flex-start;
+    align-content: stretch;
+    padding:20px;
+    background-color:#eee;
+}
+
 .commandsContainer {
     display: flex;
     align-self: flex-end;

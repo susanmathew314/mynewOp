@@ -39,6 +39,7 @@ export type AskResponse = {
 export type ChatTurn = {
     user: string;
     bot?: string;
+    date?: Date;
 };
 
 export type ChatRequest = {

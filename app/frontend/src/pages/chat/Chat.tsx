@@ -13,6 +13,7 @@ import { UserChatMessage } from "../../components/UserChatMessage";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton";
 import { ClearChatButton } from "../../components/ClearChatButton";
+import ChatHistory from "../ChatHistory/chathistory";
 
 const Chat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
@@ -79,9 +80,10 @@ const Chat = () => {
         setActiveAnalysisPanelTab(undefined);
 
         try {
-            const history: ChatTurn[] = answers.map(a => ({ user: a[0], bot: a[1].answer }));
+            const history: ChatTurn[] = answers.map(a => ({ user: a[0], bot: a[1].answer, date:new Date() }));
+            localStorage.setItem("history", JSON.stringify(history))
             const request: ChatRequest = {
-                history: [...history, { user: question, bot: undefined }],
+                history: [...history, { user: question, bot: "", date:new Date() }],
                 approach: Approaches.ReadRetrieveRead,
                 shouldStream: shouldStream,
                 overrides: {
@@ -184,13 +186,18 @@ const Chat = () => {
         setSelectedAnswer(index);
     };
 
+
     return (
         <div className={styles.container}>
+        
             <div className={styles.commandsContainer}>
                 <ClearChatButton className={styles.commandButton} onClick={clearChat} disabled={!lastQuestionRef.current || isLoading} />
                 <SettingsButton className={styles.commandButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
             </div>
             <div className={styles.chatRoot}>
+            <div className={styles.historyContainer}>
+                <ChatHistory/>
+            </div>
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
